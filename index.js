@@ -7,7 +7,7 @@ const app=express();
 
 
 app.get("/",(req,res)=>{
-    res.send("<h1>This is an express app</h1>")
+    res.json({message:"hello this is just a test "})
 })
 
 
