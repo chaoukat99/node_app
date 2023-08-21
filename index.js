@@ -53,7 +53,7 @@ app.get("/",(req,res)=>{
 app.get("/api/users",(req,res)=>{
     UserModel.find()
     .then(data=>res.status(200).json(data))
-    .catch(()=>res.status(404).json({message:"Sorry something went wrong try later "}))
+    .catch((err)=>res.status(404).json({message:"Sorry something went wrong try later ",error:err}))
 })
 
 
