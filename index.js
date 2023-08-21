@@ -44,7 +44,7 @@ const Middleware=(req,res,next)=>{
 app.use("/api/users",Middleware);
 
 app.get("/",(req,res)=>{
-    res.json({message:"hello this is just a test "})
+    res.json({message:"hello this is just a test dude ✍ "})
 })
 
 
