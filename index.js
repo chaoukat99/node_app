@@ -2,6 +2,7 @@ const express=require("express");
 const mongo_uri="mongodb+srv://chawkatomar:i5gx55P6FCFqJYDs@cluster.s5gynwk.mongodb.net/gomycode"
 
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 
 
@@ -15,6 +16,10 @@ mongoose.connect(mongo_uri)
 
 const app=express();
 
+app.use(cors({
+    origin:"*",
+    methods:["GET","POST"]
+}));
 
 const Schema=mongoose.Schema({
     username:String,
