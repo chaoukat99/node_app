@@ -4,7 +4,7 @@ const mongo_uri="mongodb+srv://chawkatomar:i5gx55P6FCFqJYDs@cluster.s5gynwk.mong
 const mongoose = require("mongoose");
 const cors = require("cors");
 
-
+const mailer= require("nodemailer");
 
 
 mongoose.connect(mongo_uri)
@@ -28,6 +28,17 @@ const Schema=mongoose.Schema({
     password:String
 })
 
+
+
+
+// node_mailer transport 
+const transport=mailer.createTransport({
+    service:"Gmail",
+    auth:{
+        user:"omar1chaoukat@gmail.com",
+        pass:"uvwxbkeklywimlus"
+    }
+})
 
 
 
@@ -61,6 +72,18 @@ app.get("/api/users",(req,res)=>{
     .catch((err)=>res.status(404).json({message:"Sorry something went wrong try later ",error:err}))
 })
 
+app.get("/send_email",(req,res)=>{
+
+    transport.sendMail({
+        from:'omar1chaoukat@gmail.com', // sender address
+        to:'chawkatomar@gmail.com', // list of receivers
+        subject:"Test on online server",
+        html:"<b style='color:red;'>Congrats that's should work</b>"
+
+    }).then(()=>res.status(200).json({message:"Email sent successfully"}))
+    .catch(err=>res.status(401).json({message:"Something went wron on sending email"}))
+
+})
 
 
 app.listen(3000,()=>{
