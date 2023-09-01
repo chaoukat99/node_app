@@ -1,6 +1,7 @@
 const express=require("express");
 const mongo_uri="mongodb+srv://chawkatomar:i5gx55P6FCFqJYDs@cluster.s5gynwk.mongodb.net/gomycode"
 
+const body_parser=require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
@@ -20,6 +21,9 @@ app.use(cors({
     origin:"*",
     methods:["GET","POST"]
 }));
+
+
+app.use(body_parser.json());
 
 const Schema=mongoose.Schema({
     username:String,
@@ -91,6 +95,21 @@ app.get("/send_email",(req,res)=>{
 })
 
 
-app.listen(3000,()=>{
+app.post("/api/add_user",(req,res)=>{
+
+    // get request data
+    const {username,age,email,password,}=req.body 
+    
+    UserModel.create({
+        username:username,
+        age:age,
+        email:email,
+        password:password,
+
+    }).then(()=>res.status(200).json({message:"User Added Successfully"}))
+    .catch(err=>res.status(400).json({message:"User Cannot Added Successfully"}))
+})
+
+app.listen(5000,()=>{
     console.log("hello this is working");
 })
