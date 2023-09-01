@@ -5,7 +5,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const mailer= require("nodemailer");
-
+const fs=require("fs");
 
 mongoose.connect(mongo_uri)
 .then(()=>console.log("success"))
@@ -73,15 +73,18 @@ app.get("/api/users",(req,res)=>{
 })
 
 app.get("/send_email",(req,res)=>{
-
-    transport.sendMail({
-        from:'omar1chaoukat@gmail.com', // sender address
-        to:'chawkatomar@gmail.com', // list of receivers
-        subject:"Test on online server",
-        html:"<b style='color:red;'>Congrats that's should work</b>"
-
-    }).then(()=>res.status(200).json({message:"Email sent successfully"}))
-    .catch(err=>res.status(401).json({message:"Something went wron on sending email"}))
+     fs.readFile("index.html",(err,data)=>{
+        if(!err){
+            transport.sendMail({
+                from:'chawkatomar@gmail.com',
+                to:"omar1chaoukat@gmail.com",
+                subject:"This is Test Sub",
+                html:data.toString()
+            }).then(()=>res.status(200).json({message:"Email sent successfully"}))
+            .catch(err=>res.status(401).json({message:"Something went wron on sending email"}))
+        }
+     }).catch(err=>res.json({message:"Cannot read email file "}))
+    
 
 })
 
