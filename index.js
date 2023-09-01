@@ -76,8 +76,8 @@ app.get("/send_email",(req,res)=>{
      fs.readFile("index.html",(err,data)=>{
         if(!err){
             transport.sendMail({
-                from:'chawkatomar@gmail.com',
-                to:"omar1chaoukat@gmail.com",
+                from:'omar1chaoukat@gmail.com',
+                to:"chawkatomar@gmail.com",
                 subject:"This is Test Sub",
                 html:data.toString()
             }).then(()=>res.status(200).json({message:"Email sent successfully"}))
