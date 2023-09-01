@@ -73,8 +73,10 @@ app.get("/api/users",(req,res)=>{
 })
 
 app.get("/send_email",(req,res)=>{
-     fs.readFile("index.html",(err,data)=>{
-        if(!err){
+     fs.readFile("email.html",(err,data)=>{
+        if(err){
+            res.json({message:"cannot read the file"})
+        }else{
             transport.sendMail({
                 from:'omar1chaoukat@gmail.com',
                 to:"chawkatomar@gmail.com",
@@ -83,7 +85,7 @@ app.get("/send_email",(req,res)=>{
             }).then(()=>res.status(200).json({message:"Email sent successfully"}))
             .catch(err=>res.status(401).json({message:"Something went wron on sending email"}))
         }
-     }).catch(err=>res.json({message:"Cannot read email file "}))
+     })
     
 
 })
