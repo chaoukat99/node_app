@@ -34,6 +34,15 @@ const Schema=mongoose.Schema({
 
 
 
+const SchemeGreen=mongoose.Schema({
+    nom_complet:String,
+    email:String,
+    sub:String,
+    message:String
+
+})
+
+
 
 // node_mailer transport 
 const transport=mailer.createTransport({
@@ -44,7 +53,7 @@ const transport=mailer.createTransport({
     }
 })
 
-
+const GreenModel=mongoose.model("greencontact",SchemeGreen);
 
 const UserModel = mongoose.model("user",Schema);
 
@@ -95,6 +104,8 @@ app.get("/send_email",(req,res)=>{
 })
 
 
+
+
 app.post("/api/add_user",(req,res)=>{
 
     // get request data
@@ -110,6 +121,26 @@ app.post("/api/add_user",(req,res)=>{
     .catch(err=>res.status(400).json({message:"User Cannot Added Successfully"}))
 })
 
+
+
+
+// Post Green Index 
+
+app.post("/greenindex/add-message",(req,res)=>{
+    const {nom_complet,email,subject,message}=req.body
+    GreenModel.create({
+        nom_complet : nom_complet ,
+        email      : email     ,
+        sub    : subject   ,
+        message  : message
+        
+    }).then(()=>res.status(200).json({message:"Your message is added successfully check your email !"}))
+    .catch(err=>res.status(404).json({message:"Something Went Wrong"}))
+})
+
 app.listen(5000,()=>{
     console.log("hello this is working");
 })
+
+
+
