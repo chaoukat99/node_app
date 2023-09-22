@@ -46,3 +46,20 @@
   </div>
 </body>
 </html>
+
+
+<script>
+  let pass1 = document.querySelector("#pass1")
+  let pass2 = document.querySelector("#pass2")
+  let btn = document.querySelector("#btn-submit")
+  pass2.onblur=()=>{
+    if(pass1.value!==pass2.value){
+       btn.disabled=true 
+    }else{
+      btn.disabled=false
+    }
+  } 
+
+
+
+</script>
