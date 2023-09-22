@@ -126,7 +126,7 @@ app.post("/api/add_user",(req,res)=>{
 
 // Post Green Index 
 
-app.post("/greenindex/add-message",(req,res)=>{
+app.post("https://node-app-omar.onrender.com/greenindex/add-message",(req,res)=>{
     const {nom_complet,email,subject,message}=req.body
     GreenModel.create({
         nom_complet : nom_complet ,
