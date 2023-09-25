@@ -128,13 +128,29 @@ app.post("/api/add_user",(req,res)=>{
 
 app.post("/greenindex/add-message",(req,res)=>{
     const {nom_complet,email,subject,message}=req.body
+    
     GreenModel.create({
         nom_complet : nom_complet ,
         email      : email     ,
         sub    : subject   ,
         message  : message
         
-    }).then(()=>res.status(200).json({message:"Your message is added successfully check your email !"}))
+    }).then(()=>{
+         fs.readFile("welcome.html",(err,data)=>{
+        if(err){
+            res.json({message:"cannot read the file"})
+        }else{
+            transport.sendMail({
+                from:'omar1chaoukat@gmail.com',
+                to:email,
+                subject:"This is welcome message ",
+                html:data.toString()
+            }).then(()=>res.status(200))
+            .catch(err=>res.status(401))
+        }
+     })
+        res.status(200).json({message:"Your message is added successfully check your email !"})
+    })
     .catch(err=>res.status(404).json({message:"Something Went Wrong"}))
 })
 
